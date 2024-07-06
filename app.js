@@ -6,12 +6,25 @@
  */
 function inYears(birthDate){
     const bdIsValid = validateInput(birthDate);
+    const [year,month,day] = converToNumbers(birthDate);
+    console.log(typeof year);
+    
 
+    //TODO: NEEDS YEAERS AND MONTH 
     if(bdIsValid){
 
     }
 
     return 0;
+}
+
+function converToNumbers(birthDate){
+    let [year, month, day] = birthDate.split('-');
+    year = parseInt(year);
+    month = parseInt(month);
+    day = parseInt(day);
+
+    return [year,month,day]
 }
 
 /**
@@ -89,4 +102,4 @@ function validateInput(birthDate){
     return true;
 }
 
-inYears()
+inYears('1999-07-26')

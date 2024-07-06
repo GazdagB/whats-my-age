@@ -66,6 +66,21 @@ function inWeeks(birthDate) {
 }
 
 /**
+ * This function returns an object with all intervals such as years, months etc... 
+ * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
+ * @returns {object} Returns an object with all periods passed since the given date ex.: years, month, weeks etc...
+ */
+function inAll(birthDate){
+    const obj = {};
+    obj.years = inYears(birthDate);
+    obj.month = inMonths(birthDate);
+    obj.weeks= inWeeks(birthDate);
+    obj.day = inDays(birthDate);
+
+    return obj;
+}
+
+/**
  * Helper function to convert date string to numbers
  * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
  * @returns {number[]} An array containing year, month, and day as numbers
@@ -115,4 +130,4 @@ function validateInput(birthDate) {
     return true;
 }
 
-module.exports = { inYears, inMonths, inDays, inWeeks };
+module.exports = { inYears, inMonths, inDays, inWeeks, inAll};

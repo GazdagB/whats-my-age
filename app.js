@@ -75,6 +75,20 @@ function inDays(birthDate) {
     return null;
 }
 
+/**
+ * This function returns the number of weeks since the given date 
+ * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
+ * @returns {number} The number of weeks since the given date
+ */
+function inWeeks(birthDate) {
+    const days = inDays(birthDate);
+    if (days !== null) {
+        const weeks = Math.floor(days / 7);
+        return weeks;
+    }
+    return null;
+}
+
 function converToNumbers(birthDate){
     let [year, month, day] = birthDate.split('-');
     year = parseInt(year);

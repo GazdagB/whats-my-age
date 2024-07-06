@@ -1,21 +1,25 @@
 const dateNow = new Date(Date.now())
+const currentYear = dateNow.getFullYear();
+const currentMonth = dateNow.getMonth() + 1;
+const currentDay = dateNow.getDate();
 
 /**
  * This function calculates the age in years from a given date String 
  * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
- * @returns {number} returns the age in number format 
+ * @returns {number} returns the number of years since the given date
  */
 function inYears(birthDate){
     const bdIsValid = validateInput(birthDate);
+
     const [birthYear,birthMonth,birthDay] = converToNumbers(birthDate);
   
 
     if(bdIsValid){
-        let years = dateNow.getFullYear() - birthYear; 
+        let years = currentYear - birthYear; 
 
-        if(birthMonth < dateNow.getMonth() + 1){
+        if(birthMonth < currentMonth){
             years--; 
-        }else if( birthMonth === dateNow.getMonth() + 1 && birthDay > dateNow.getDate()){
+        }else if( birthMonth === currentMonth && birthDay > currentDay){
             years--
         }
 
@@ -23,6 +27,32 @@ function inYears(birthDate){
     }
 
     return null;
+}
+/**
+ * This function returns the number of months a person lived 
+ * @param {string } birthDate in 'YYYY-MM-DD' format 
+ * @returns {number} The number of monts since the given date
+ */
+function inMonths(birthDate){
+const bdIsValid = validateInput(birthDate);
+const [birthYear,birthMonth,birthDay] = converToNumbers(birthDate)
+
+let resultMonths = (currentYear - birthYear) * 12; 
+
+if(bdIsValid){
+    let yearDifferenceInMonths = (currentYear - birthYear) * 12;
+    let monthDifference = currentMonth - birthMonth;
+
+    if (currentDay < birthDay) {
+        monthDifference--;
+    }
+
+    const totalMonthsLived = yearDifferenceInMonths + monthDifference;
+
+    return totalMonthsLived;
+}
+
+return null;
 }
 
 function converToNumbers(birthDate){
@@ -109,4 +139,4 @@ function validateInput(birthDate){
     return true;
 }
 
-module.exports = {inYears}
+module.exports = {inYears,inMonths}

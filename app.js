@@ -80,6 +80,33 @@ function inAll(birthDate){
     return obj;
 }
 
+function inAge(birthDate) {
+    if (!validateInput(birthDate)) return null;
+
+    const [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
+
+    const obj = {};
+
+    let years = currentYear - birthYear;
+    let months = currentMonth - birthMonth;
+    let days = currentDay - birthDay;
+
+    if (days < 0) {
+        months -= 1;
+        days += new Date(currentYear, currentMonth - 1, 0).getDate();
+    }
+
+    if (months < 0) {
+        years -= 1;
+        months += 12;
+    }
+    obj.years = years;
+    obj.months = months;
+    obj.days = days; 
+
+    return obj;
+}
+
 /**
  * Helper function to convert date string to numbers
  * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
@@ -130,4 +157,4 @@ function validateInput(birthDate) {
     return true;
 }
 
-module.exports = { inYears, inMonths, inDays, inWeeks, inAll};
+module.exports = { inYears, inMonths, inDays, inWeeks, inAll, inAge};

@@ -1,5 +1,5 @@
 {
-  "name": "whats-my-age",
+  "name": "how-old",
   "version": "1.0.0",
   "description": "This small library lets you calculates how old a person is from a Date String given in 'YYYY-MM-DD'",
   "main": "app.js",

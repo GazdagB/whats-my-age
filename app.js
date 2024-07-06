@@ -4,7 +4,13 @@
  * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
  * @returns 
  */
-function calculateAge(birthDate){
+function inYears(birthDate){
+    const bdIsValid = validateInput(birthDate);
+
+    if(bdIsValid){
+
+    }
+
     return 0;
 }
 
@@ -83,4 +89,4 @@ function validateInput(birthDate){
     return true;
 }
 
-validateInput('1990-02-30')
+inYears()

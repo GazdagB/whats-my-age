@@ -17,13 +17,12 @@ function calculateAge(birthDate){
 function validateInput(birthDate){
 
     //TODO: Later implement Leap years
+    //TODO: Refactor code, tidy up
 
-    const reg = new RegExp('^[0-9]+$');
-    
+    //REGEX 
+    const reg = new RegExp('^[0-9]+$'); //ONLY NUMERIC VALUES ALLOWED
     const dateNow = new Date(Date.now())
   
-    //TODO: 
-    // INPUT : 'YYYY-MM-DD'
     //1) CHECK IF THE INPUT IS A STRING 
         if(typeof birthDate != 'string'){
             console.log('This is an error');
@@ -31,19 +30,19 @@ function validateInput(birthDate){
         }
     //2) SPLIT THE STRING
         let [year, month, day] = birthDate.split('-')
-        console.log(year,month,day);
-        
+        const isValidNumber = (value, length) => reg.test(value) && value.length === length;
+
     //3) CHECK SEPARETLY IF THEY ARE A NUBMER 
     // Checking if they are a number or the apropriate number of characters 
-    if(!year.match(reg) || year.length != 4 ){
+    if(!isValidNumber(year, 4)){
         throw new TypeError('Year is not a valid number')
     }
 
-    if(!month.match(reg) || month.length != 2 ){
+    if(!isValidNumber(month, 2)){
         throw new TypeError('Month is not a valid number')
     }
 
-    if(!day.match(reg) || day.length != 2){
+    if(!isValidNumber(day,2)){
         throw new TypeError('Day is not a valid number')
     }
 
@@ -54,13 +53,10 @@ function validateInput(birthDate){
         console.log(year, month, day);
         
 
-        if(isNaN(year)){
-            throw new TypeError('Year is not a valid number')
-        } else if(isNaN(month)){
-            throw new TypeError('Month is not a valid number!')
-        } else if(isNaN(day)){
-            throw new TypeError('Day is not a valid number!')
+        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+        throw new TypeError('Date parts must be valid numbers');
         }
+        
     //4) VALIDATE THE NUMBERS ONE BY ONE 
     if(year > dateNow.getFullYear()){
         throw new RangeError('Year cannot be greater than present!')
@@ -75,15 +71,17 @@ function validateInput(birthDate){
     }
  
     //5) VALIDATE THE DAYS BY MONTH 
-    if((month === 4 || month === 6 || month === 9 || month === 11) && day > 30 ){
-        throw new RangeError('The given month has 30 days')
-    }
+    const hasThirtyDays = [4, 6, 9, 11].includes(month);
+    const isFebruary = month === 2;
 
-    if((month === 2 ) && day > 29 ){
-        throw new RangeError('The given month has max 29 days')
+    if (hasThirtyDays && day > 30) {
+        throw new RangeError('The given month has 30 days');
+    }
+    if (isFebruary && day > 29) {
+        throw new RangeError('February has a maximum of 29 days');
     }
 
     return true;
 }
 
-validateInput('1990-04-30')
+validateInput('1990-12-30')

@@ -27,7 +27,7 @@ npm install how-old
 Worried about leap years messing up your calculations? Fear not! The approach used in the library incorporates leap years automatically. This is because the calculation relies on the JavaScript Date object and the subtraction of two dates. So, whether it's a leap year or not, you'll get accurate results every time.
 
 ## SHARE YOUR PROJECTS WITH US 
-USE #howoldlib on social media.
+USE #whatsmyage on social media.
 We're excited to see what you build with our Age Calculator. If you have any questions, suggestions, or just want to share what you've created, feel free to reach out. Happy coding!
 
 

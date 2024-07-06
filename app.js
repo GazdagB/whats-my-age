@@ -109,4 +109,4 @@ function validateInput(birthDate){
     return true;
 }
 
-console.log(inYears('1999-07-26'));
+module.exports = {inYears}

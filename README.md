@@ -22,6 +22,49 @@ Install via npm:
 npm install how-old
 ```
 
+## Basic Usage
+To calculate the age in years, you can use the following code:
+
+```
+const whatsMyAge = require('whats-my-age');
+
+const ageInYears = whatsMyAge.inYears('1990-01-01');
+console.log(`Age in years: ${ageInYears}`);
+```
+
+## Calculating Different Time Intervals
+You can also calculate age in months, days, or weeks:
+
+* Months
+
+```
+const ageInMonths = whatsMyAge.inMonths('1990-01-01');
+console.log(`Age in months: ${ageInMonths}`);
+```
+
+* Days 
+
+```
+const ageInDays = whatsMyAge.inDays('1990-01-01');
+console.log(`Age in days: ${ageInDays}`);
+```
+
+* Weeks
+
+```
+const ageInWeeks = whatsMyAge.inWeeks('1990-01-01');
+console.log(`Age in weeks: ${ageInWeeks}`);
+```
+
+## Detailed Age Breakdown
+For a detailed breakdown of age in years, months, and days:
+
+```
+const detailedAge = whatsMyAge.inAll('1990-01-01');
+console.log(`Detailed age: Years: ${detailedAge.years}, Months: ${detailedAge.months}, Days: ${detailedAge.days}`);
+```
+
+
 ## Leap Years? Absolutely!
 
 Worried about leap years messing up your calculations? Fear not! The approach used in the library incorporates leap years automatically. This is because the calculation relies on the JavaScript Date object and the subtraction of two dates. So, whether it's a leap year or not, you'll get accurate results every time.

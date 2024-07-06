@@ -1,21 +1,28 @@
+const dateNow = new Date(Date.now())
 
 /**
- * 
+ * This function calculates the age in years from a given date String 
  * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
- * @returns 
+ * @returns {number} returns the age in number format 
  */
 function inYears(birthDate){
     const bdIsValid = validateInput(birthDate);
-    const [year,month,day] = converToNumbers(birthDate);
-    console.log(typeof year);
-    
+    const [birthYear,birthMonth,birthDay] = converToNumbers(birthDate);
+  
 
-    //TODO: NEEDS YEAERS AND MONTH 
     if(bdIsValid){
+        let years = dateNow.getFullYear() - birthYear; 
 
+        if(birthMonth < dateNow.getMonth() + 1){
+            years--; 
+        }else if( birthMonth === dateNow.getMonth() + 1 && birthDay > dateNow.getDate()){
+            years--
+        }
+
+        return years;
     }
 
-    return 0;
+    return null;
 }
 
 function converToNumbers(birthDate){
@@ -39,7 +46,7 @@ function validateInput(birthDate){
 
     //REGEX 
     const reg = new RegExp('^[0-9]+$'); //ONLY NUMERIC VALUES ALLOWED
-    const dateNow = new Date(Date.now())
+    
   
     //1) CHECK IF THE INPUT IS A STRING 
         if(typeof birthDate != 'string'){
@@ -102,4 +109,4 @@ function validateInput(birthDate){
     return true;
 }
 
-inYears('1999-07-26')
+console.log(inYears('1999-07-26'));

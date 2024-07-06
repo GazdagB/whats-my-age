@@ -1,6 +1,6 @@
 {
   "name": "whats-my-age",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A versatile JavaScript library for accurately calculating age from a birthdate in 'YYYY-MM-DD' format, including leap year support.",
   "main": "app.js",
   "scripts": {

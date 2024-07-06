@@ -17,7 +17,6 @@ function calculateAge(birthDate){
 function validateInput(birthDate){
 
     //TODO: Later implement Leap years
-    //TODO: Refactor code, tidy up
 
     //REGEX 
     const reg = new RegExp('^[0-9]+$'); //ONLY NUMERIC VALUES ALLOWED
@@ -84,4 +83,4 @@ function validateInput(birthDate){
     return true;
 }
 
-validateInput('1990-12-30')
+validateInput('1990-02-30')

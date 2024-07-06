@@ -1,4 +1,4 @@
-const dateNow = new Date(Date.now())
+const dateNow = new Date(Date.now());
 const currentYear = dateNow.getFullYear();
 const currentMonth = dateNow.getMonth() + 1;
 const currentDay = dateNow.getDate();
@@ -8,71 +8,51 @@ const currentDay = dateNow.getDate();
  * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
  * @returns {number} returns the number of years since the given date
  */
-function inYears(birthDate){
-    const bdIsValid = validateInput(birthDate);
+function inYears(birthDate) {
+    if (!validateInput(birthDate)) return null;
 
-    const [birthYear,birthMonth,birthDay] = converToNumbers(birthDate);
-  
+    const [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
+    let years = currentYear - birthYear;
 
-    if(bdIsValid){
-        let years = currentYear - birthYear; 
-
-        if(birthMonth < currentMonth){
-            years--; 
-        }else if( birthMonth === currentMonth && birthDay > currentDay){
-            years--
-        }
-
-        return years;
+    if (birthMonth > currentMonth || (birthMonth === currentMonth && birthDay > currentDay)) {
+        years--;
     }
 
-    return null;
+    return years;
 }
+
 /**
- * This function returns the number of months a since the given date  
- * @param {string } birthDate in 'YYYY-MM-DD' format 
- * @returns {number} The number of monts since the given date
+ * This function returns the number of months since the given date  
+ * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
+ * @returns {number} The number of months since the given date
  */
-function inMonths(birthDate){
-const bdIsValid = validateInput(birthDate);
-const [birthYear,birthMonth,birthDay] = converToNumbers(birthDate)
+function inMonths(birthDate) {
+    if (!validateInput(birthDate)) return null;
 
-let resultMonths = (currentYear - birthYear) * 12; 
-
-if(bdIsValid){
-    let yearDifferenceInMonths = (currentYear - birthYear) * 12;
-    let monthDifference = currentMonth - birthMonth;
+    const [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
+    let totalMonths = (currentYear - birthYear) * 12 + (currentMonth - birthMonth);
 
     if (currentDay < birthDay) {
-        monthDifference--;
+        totalMonths--;
     }
 
-    const totalMonthsLived = yearDifferenceInMonths + monthDifference;
-
-    return totalMonthsLived;
-}
-
-return null;
+    return totalMonths;
 }
 
 /**
  * This function returns the number of days since the given date 
- * @param {string } birthDate in 'YYYY-MM-DD' format 
+ * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
  * @returns {number} The number of days since the given date
  */
 function inDays(birthDate) {
-    const bdIsValid = validateInput(birthDate);
-    const [birthYear, birthMonth, birthDay] = converToNumbers(birthDate);
+    if (!validateInput(birthDate)) return null;
 
-    if (bdIsValid) {
-        const birthDateObj = new Date(birthYear, birthMonth - 1, birthDay); // 
-        const timeDifference = dateNow - birthDateObj;
-        const dayDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+    const [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
+    const birthDateObj = new Date(birthYear, birthMonth - 1, birthDay);
+    const timeDifference = dateNow - birthDateObj;
+    const dayDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
 
-        return dayDifference;
-    }
-
-    return null;
+    return dayDifference;
 }
 
 /**
@@ -82,95 +62,57 @@ function inDays(birthDate) {
  */
 function inWeeks(birthDate) {
     const days = inDays(birthDate);
-    if (days !== null) {
-        const weeks = Math.floor(days / 7);
-        return weeks;
-    }
-    return null;
-}
-
-function converToNumbers(birthDate){
-    let [year, month, day] = birthDate.split('-');
-    year = parseInt(year);
-    month = parseInt(month);
-    day = parseInt(day);
-
-    return [year,month,day]
+    return days !== null ? Math.floor(days / 7) : null;
 }
 
 /**
- * This function validates an inputed date string returns true if valed throws errors if not
+ * Helper function to convert date string to numbers
+ * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
+ * @returns {number[]} An array containing year, month, and day as numbers
+ */
+function convertToNumbers(birthDate) {
+    return birthDate.split('-').map(part => parseInt(part));
+}
+
+/**
+ * This function validates an inputted date string and returns true if valid, throws errors if not
  * @param {string} birthDate a date string in 'YYYY-MM-DD' format 
- * Leap year
  * @returns {boolean} Returns true if valid
  */
-function validateInput(birthDate){
-
-    //TODO: Later implement Leap years
-
-    //REGEX 
-    const reg = new RegExp('^[0-9]+$'); //ONLY NUMERIC VALUES ALLOWED
-    
-  
-    //1) CHECK IF THE INPUT IS A STRING 
-        if(typeof birthDate != 'string'){
-            console.log('This is an error');
-            throw new Error('The provided date is not a string') 
-        }
-    //2) SPLIT THE STRING
-        let [year, month, day] = birthDate.split('-')
-        const isValidNumber = (value, length) => reg.test(value) && value.length === length;
-
-    //3) CHECK SEPARETLY IF THEY ARE A NUBMER 
-    // Checking if they are a number or the apropriate number of characters 
-    if(!isValidNumber(year, 4)){
-        throw new TypeError('Year is not a valid number')
+function validateInput(birthDate) {
+    if (typeof birthDate !== 'string') {
+        console.error('This is an error');
+        throw new Error('The provided date is not a string');
     }
 
-    if(!isValidNumber(month, 2)){
-        throw new TypeError('Month is not a valid number')
-    }
+    const [year, month, day] = birthDate.split('-');
+    const isValidNumber = (value, length) => /^\d+$/.test(value) && value.length === length;
 
-    if(!isValidNumber(day,2)){
-        throw new TypeError('Day is not a valid number')
-    }
-
-        year = parseInt(year)
-        month = parseInt(month) 
-        day = parseInt(day)
-
-        console.log(year, month, day);
-        
-
-        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+    if (!isValidNumber(year, 4) || !isValidNumber(month, 2) || !isValidNumber(day, 2)) {
         throw new TypeError('Date parts must be valid numbers');
-        }
-        
-    //4) VALIDATE THE NUMBERS ONE BY ONE 
-    if(year > dateNow.getFullYear()){
-        throw new RangeError('Year cannot be greater than present!')
     }
 
-    if(month > 12 || month < 1){
-        throw new RangeError('Month is out of valid range!')
+    const [yearNum, monthNum, dayNum] = [parseInt(year), parseInt(month), parseInt(day)];
+
+    if (isNaN(yearNum) || isNaN(monthNum) || isNaN(dayNum)) {
+        throw new TypeError('Date parts must be valid numbers');
     }
 
-    if(day > 31 || day < 1){
-        throw new RangeError('Day is out of valid range!')
+    if (yearNum > currentYear || monthNum > 12 || monthNum < 1 || dayNum > 31 || dayNum < 1) {
+        throw new RangeError('Date parts out of valid range');
     }
- 
-    //5) VALIDATE THE DAYS BY MONTH 
-    const hasThirtyDays = [4, 6, 9, 11].includes(month);
-    const isFebruary = month === 2;
 
-    if (hasThirtyDays && day > 30) {
+    const hasThirtyDays = [4, 6, 9, 11].includes(monthNum);
+    const isFebruary = monthNum === 2;
+
+    if (hasThirtyDays && dayNum > 30) {
         throw new RangeError('The given month has 30 days');
     }
-    if (isFebruary && day > 29) {
+    if (isFebruary && dayNum > 29) {
         throw new RangeError('February has a maximum of 29 days');
     }
 
     return true;
 }
 
-module.exports = {inYears,inMonths, inDays}
+module.exports = { inYears, inMonths, inDays, inWeeks };

@@ -29,7 +29,7 @@ function inYears(birthDate){
     return null;
 }
 /**
- * This function returns the number of months a person lived 
+ * This function returns the number of months a since the given date  
  * @param {string } birthDate in 'YYYY-MM-DD' format 
  * @returns {number} The number of monts since the given date
  */
@@ -53,6 +53,26 @@ if(bdIsValid){
 }
 
 return null;
+}
+
+/**
+ * This function returns the number of days since the given date 
+ * @param {string } birthDate in 'YYYY-MM-DD' format 
+ * @returns {number} The number of days since the given date
+ */
+function inDays(birthDate) {
+    const bdIsValid = validateInput(birthDate);
+    const [birthYear, birthMonth, birthDay] = converToNumbers(birthDate);
+
+    if (bdIsValid) {
+        const birthDateObj = new Date(birthYear, birthMonth - 1, birthDay); // 
+        const timeDifference = dateNow - birthDateObj;
+        const dayDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+
+        return dayDifference;
+    }
+
+    return null;
 }
 
 function converToNumbers(birthDate){
@@ -139,4 +159,4 @@ function validateInput(birthDate){
     return true;
 }
 
-module.exports = {inYears,inMonths}
+module.exports = {inYears,inMonths, inDays}

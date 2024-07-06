@@ -1,6 +1,6 @@
 {
   "name": "whats-my-age",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A versatile JavaScript library for accurately calculating age from a birthdate in 'YYYY-MM-DD' format, including leap year support.",
   "main": "app.js",
   "scripts": {
@@ -11,6 +11,10 @@
     "calcage",
     "birthdate"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GazdagB/whats-my-age.git"
+  },
   "author": "Gazdag Balazs",
   "license": "ISC"
 }

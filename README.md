@@ -1,3 +1,6 @@
+<a href="https://buymeacoffee.com/thecodedesigner" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
+
 # Age Calculator
 
 A simple, yet powerful JavaScript library for calculating age and time intervals from a given date. Whether you need to calculate the age in years, months, days, or weeks, or you require a detailed breakdown of the age in all these units, this library has got you covered. It accepts both string and Date object inputs for birthdates.

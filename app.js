@@ -3,8 +3,38 @@ const currentYear = dateNow.getFullYear();
 const currentMonth = dateNow.getMonth() + 1;
 const currentDay = dateNow.getDate();
 
+function parseBirthDate(birthDate) {
+    if (birthDate instanceof Date) {
+        return birthDate;
+    } else if (typeof birthDate === 'string' && validateInput(birthDate)) {
+        const [year, month, day] = convertToNumbers(birthDate);
+        return new Date(year, month - 1, day);
+    } else {
+        return null;
+    }
+}
 
+function calculateAgeDifference(birthDate) {
+    const birthDateObj = parseBirthDate(birthDate);
+    if (!birthDateObj) return { years: 0, months: 0, days: 0 };
 
+    const currentDate = new Date();
+    let years = currentDate.getFullYear() - birthDateObj.getFullYear();
+    let months = currentDate.getMonth() - birthDateObj.getMonth();
+    let days = currentDate.getDate() - birthDateObj.getDate();
+
+    if (days < 0) {
+        months--;
+        days += new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    return { years, months, days };
+}
 
 /**
  * This function calculates the age in years from a given date String 
@@ -12,124 +42,61 @@ const currentDay = dateNow.getDate();
  * @returns {number} returns the number of years since the given date
  */
 function inYears(birthDate) {
-   if(!(birthDate instanceof Date)){
-    if (!validateInput(birthDate)) return null;
-   }
-
-    let birthYear, birthMonth, birthDay;
-
-    // Check if birthDate is an instance of Date
-    if (birthDate instanceof Date) {
-        birthYear = birthDate.getFullYear();
-        birthMonth = birthDate.getMonth() + 1; // getMonth() is zero-indexed
-        birthDay = birthDate.getDate();
-    } else {
-        // Assuming convertToNumbers handles string input and returns [year, month, day]
-        [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
-    }
-
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1; // getMonth() is zero-indexed
-    const currentDay = currentDate.getDate();
-
-    let years = currentYear - birthYear;
-
-    if (birthMonth > currentMonth || (birthMonth === currentMonth && birthDay > currentDay)) {
-        years--;
-    }
-
-    return years;
+    return calculateAgeDifference(birthDate).years;
 }
 
 /**
  * This function returns the number of months since the given date  
- * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
+ * @param {string | Date} birthDate Birthdate in string format 'YYYY-MM-DD' or Date object
  * @returns {number} The number of months since the given date
  */
 function inMonths(birthDate) {
-    if (!validateInput(birthDate)) return null;
-
-    const [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
-    let totalMonths = (currentYear - birthYear) * 12 + (currentMonth - birthMonth);
-
-    if (currentDay < birthDay) {
-        totalMonths--;
-    }
-
-    return totalMonths;
+    const { years, months } = calculateAgeDifference(birthDate);
+    return years * 12 + months;
 }
 
 /**
  * This function returns the number of days since the given date 
- * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
+ * @param {string | Date} birthDate Birthdate in string format 'YYYY-MM-DD' or Date object
  * @returns {number} The number of days since the given date
  */
 function inDays(birthDate) {
-    if (!validateInput(birthDate)) return null;
-
-    const [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
-    const birthDateObj = new Date(birthYear, birthMonth - 1, birthDay);
-    const timeDifference = dateNow - birthDateObj;
-    const dayDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
-
-    return dayDifference;
+    const birthDateObj = parseBirthDate(birthDate);
+    if (!birthDateObj) return 0;
+    const timeDifference = new Date() - birthDateObj;
+    return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 }
 
 /**
  * This function returns the number of weeks since the given date 
- * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
+ * @param {string | Date} birthDate Birthdate in string format 'YYYY-MM-DD' or Date object
  * @returns {number} The number of weeks since the given date
  */
 function inWeeks(birthDate) {
-    const days = inDays(birthDate);
-    return days !== null ? Math.floor(days / 7) : null;
+    return Math.floor(inDays(birthDate) / 7);
 }
 
 /**
- * This function returns an object with all intervals such as years, months etc... 
- * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
- * @returns {object} Returns an object with all periods passed since the given date ex.: years, month, weeks etc...
+ * This function returns an object with all intervals such as years, months, weeks, and days 
+ * since the given date, now accepting both string and Date types for birthDate.
+ * @param {string | Date} birthDate Birthdate in string format 'YYYY-MM-DD' or Date object
+ * @returns {object} Returns an object with all periods passed since the given date ex.: years, months, weeks, days
  */
-function inAll(birthDate){
-    const obj = {};
-    obj.years = inYears(birthDate);
-    obj.month = inMonths(birthDate);
-    obj.weeks= inWeeks(birthDate);
-    obj.day = inDays(birthDate);
-
-    return obj;
+function inAll(birthDate) {
+    return {
+        years: inYears(birthDate),
+        months: inMonths(birthDate),
+        weeks: inWeeks(birthDate),
+        days: inDays(birthDate)
+    };
 }
 /**
  * This function returns an object with the age broken down into years, months, and days
- * @param {*} birthDate A string representing the birthdate in 'YYYY-MM-DD' format
+ * @param {string | Date} birthDate A string representing the birthdate in 'YYYY-MM-DD' format or a Date object
  * @returns an object with broken down age in years, months, and days
  */
 function inAge(birthDate) {
-    if (!validateInput(birthDate)) return null;
-
-    const [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
-
-    const obj = {};
-
-    let years = currentYear - birthYear;
-    let months = currentMonth - birthMonth;
-    let days = currentDay - birthDay;
-
-    if (days < 0) {
-        months -= 1;
-        days += new Date(currentYear, currentMonth - 1, 0).getDate();
-    }
-
-    if (months < 0) {
-        years -= 1;
-        months += 12;
-    }
-    obj.years = years;
-    obj.months = months;
-    obj.days = days; 
-
-    return obj;
+    return calculateAgeDifference(birthDate);
 }
 
 /**

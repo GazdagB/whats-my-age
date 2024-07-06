@@ -3,15 +3,36 @@ const currentYear = dateNow.getFullYear();
 const currentMonth = dateNow.getMonth() + 1;
 const currentDay = dateNow.getDate();
 
+
+
+
 /**
  * This function calculates the age in years from a given date String 
- * @param {string} birthDate Birthdate in string format 'YYYY-MM-DD'
+ * @param {string | Date} birthDate Birthdate in string format 'YYYY-MM-DD' or Date object
  * @returns {number} returns the number of years since the given date
  */
 function inYears(birthDate) {
+   if(!(birthDate instanceof Date)){
     if (!validateInput(birthDate)) return null;
+   }
 
-    const [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
+    let birthYear, birthMonth, birthDay;
+
+    // Check if birthDate is an instance of Date
+    if (birthDate instanceof Date) {
+        birthYear = birthDate.getFullYear();
+        birthMonth = birthDate.getMonth() + 1; // getMonth() is zero-indexed
+        birthDay = birthDate.getDate();
+    } else {
+        // Assuming convertToNumbers handles string input and returns [year, month, day]
+        [birthYear, birthMonth, birthDay] = convertToNumbers(birthDate);
+    }
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; // getMonth() is zero-indexed
+    const currentDay = currentDate.getDate();
+
     let years = currentYear - birthYear;
 
     if (birthMonth > currentMonth || (birthMonth === currentMonth && birthDay > currentDay)) {
@@ -79,7 +100,11 @@ function inAll(birthDate){
 
     return obj;
 }
-
+/**
+ * This function returns an object with the age broken down into years, months, and days
+ * @param {*} birthDate A string representing the birthdate in 'YYYY-MM-DD' format
+ * @returns an object with broken down age in years, months, and days
+ */
 function inAge(birthDate) {
     if (!validateInput(birthDate)) return null;
 

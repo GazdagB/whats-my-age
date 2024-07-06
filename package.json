@@ -1,16 +1,16 @@
 {
   "name": "how-old",
   "version": "1.0.0",
-  "description": "This small library lets you calculates how old a person is from a Date String given in 'YYYY-MM-DD'",
+  "description": "A versatile JavaScript library for accurately calculating age from a birthdate in 'YYYY-MM-DD' format, including leap year support.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "age",
-    "calcage"
+    "calcage",
+    "birthdate"
   ],
-  
   "author": "Gazdag Balazs",
   "license": "ISC"
 }

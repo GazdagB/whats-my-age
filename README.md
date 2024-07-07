@@ -1,6 +1,6 @@
 <a href="https://buymeacoffee.com/thecodedesigner" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
-<img src='https://i.ibb.co/348mZYs/wma.png'>
+<img src='https://i.ibb.co/TtLgtG7/Banner.png'>
 
 # Age Calculator
 

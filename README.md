@@ -1,5 +1,6 @@
 <a href="https://buymeacoffee.com/thecodedesigner" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
+<img src='https://i.ibb.co/348mZYs/wma.png'>
 
 # Age Calculator
 
@@ -15,6 +16,14 @@ We've designed this library with ease of use in mind, making it a breeze to inte
 - Comprehensive validation of input date strings.
 - Leap years? No problem! Our calculations automatically account for them.
 
+| Function |  Description  |
+|:-----|:--------|
+| inYears | Returns the exact number of years passed since the given Date or date string   |
+| inMonths   |  Returns the exact number of months passed since the given Date or date string |
+| inWeeks   | Returns the exact number of months passed since the given Date or date string considering leap years | 
+|inDays |  Returns the exact number of days passed since the given Date or date string considering leap years|
+|inAll | Returns an Object containing all of the values above |
+| inAge | Returns an object with a broken down values of year, month , day. Example if you are 24,5 years old than {years: 24 , months: 6 , days: 34}|
 ## Installation
 
 Ready to get started? Install via npm with a simple command:
@@ -22,7 +31,7 @@ Ready to get started? Install via npm with a simple command:
 Install via npm:
 
 ```
-npm install how-old
+npm install whats-my-age
 ```
 
 ## Basic Usage
@@ -75,5 +84,10 @@ Worried about leap years messing up your calculations? Fear not! The approach us
 ## SHARE YOUR PROJECTS WITH US 
 USE #whatsmyage on social media.
 We're excited to see what you build with our Age Calculator. If you have any questions, suggestions, or just want to share what you've created, feel free to reach out. Happy coding!
+
+## Future Plans
+ * Implementing more functions like: Age difference between two dates. 
+ * Implementing dog and cat age calculator functions
+ * Developing a REST API for this project 
 
 
